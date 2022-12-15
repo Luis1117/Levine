@@ -8,8 +8,7 @@ k = np.char.replace(np.array(a), 'K.txt', '')
 l = np.char.replace(k, './', '')
 m = sorted(l.astype(float), key=float)
 
-# print(m)
-# guardia = []
+# Carregando dados dos txt, usar listas é melhor para isso
 
 novo02 = []
 for i in range(len(a)):
@@ -21,30 +20,26 @@ for i in range(len(a)):
     lol = novo + [l[i]]
     novo02.append(lol)
 
+# Uma vez carregado pasamos para numpy array:
 matrix = np.reshape(np.array(novo02, dtype=object), (len(a), 2))
 
-matrix02 = np.reshape(matrix[1, 0], (501, 5))
+# Testamos 'matrix02 = np.reshape(matrix[1, 0], (501, 5))', estamos procurando
+# um paso de voltagem de 0.01 V, Agora introducimos um for para pegarmos I-d para esse paso:
 
-# matrix[20, 0]
-# for i in range(len(a)):
-#     matrix02 = np.reshape(matrix[i, 0], (501, 5))
-
-
-# print(np.r_[matrix02[5], [5, l[5]]])
 array = []
 for i in range(len(a)):
     matrix02 = np.reshape(matrix[i, 0], (501, 5))
     for j in range(101):
         c = (5*j)
         d = matrix02[c]
-        e = np.r_[d, [i, l[i]]]
+        e = np.r_[d, [j, l[i]]]
         array.append(e)
 
-print(array[10])
-# b = np.genfromtxt(a[1], dtype='str')
-# c = np.genfromtxt
-# c = b[1:7]
-# print(type(b))
+# Reajeitamos, 21 txt, 101 pontos a ler, 7 columnas:
+
+matrix03 = np.reshape(np.array(array), (21, 101, 7))
+print(matrix03[3][1])
+
 
 # matrix = np.array(array).astype(float)
 # matrix02 = np.c_[matrix, np.log(np.abs(matrix[:, 1])), 1 / matrix[:, 3]]
