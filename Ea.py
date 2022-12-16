@@ -65,7 +65,7 @@ def my_plot_EavsV():
 
     LnTV = np.reshape(LnT, (22, 101, 11))
     Ea = []
-    for i in range(101):
+    for i in range(101):    
         LnTVn = LnTV[:, i][LnTV[:, i][:, 3].argsort()]
         Ea.append(LnTVn)
     # print(Ea)

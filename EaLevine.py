@@ -38,13 +38,14 @@ for i in range(len(a)):
 # Reajeitamos, 21 txt, 101 pontos a ler, 7 columnas:
 
 matrix03 = np.reshape(np.array(array), (21, 101, 7))
-print(matrix03[1][0][4])
 
+ordenando = matrix03[:, 1][matrix03[:, 1][:, 6].argsort()]
+# print(matrix03[:, 1])
+print(ordenando)
 
 # matrix = np.array(array).astype(float)
 # matrix02 = np.c_[matrix, np.log(np.abs(matrix[:, 1])), 1 / matrix[:, 3]]
 # prova = np.reshape(matrix02, (57, 101, 6))
-
 # final = []
 # for i in range(100):
 #     prova02 = prova[:, i][prova[:, i][:, 3argsort()]
