@@ -35,13 +35,33 @@ for i in range(len(a)):
         e = np.r_[d, [j, l[i]]]
         array.append(e)
 
-# Reajeitamos, 21 txt, 101 pontos a ler, 7 columnas:
+# Reajeitamos, em 21 txt, 101 pontos a ler, 7 columnas:
 
-matrix03 = np.reshape(np.array(array), (21, 101, 7))
+matrix03 = np.reshape(np.array(array), (21, 101, 7)).astype(float)
 
-ordenando = matrix03[:, 1][matrix03[:, 1][:, 6].argsort()]
-# print(matrix03[:, 1])
-print(ordenando)
+graficos = []
+for i in range(101):
+    ordenando = matrix03[:, i][matrix03[:, i][:, 6].argsort()]
+    ordenando02 = np.c_[ordenando, 1/ordenando[:, 6]]
+    graficos.append(ordenando02)
+
+print(matrix03[3][0])
+
+#  fig, ax = plt.subplots()
+# ax.scatter(graficos[10][:, 7], graficos[10][:, 1])
+# ax.set_xlabel('1/T')
+# ax.set_ylabel('Dark-Current (A)')
+# ax.set_title('Graficos')
+# plt.show()
+
+
+# for i in range(101):
+# x =
+# y =
+
+#     fig, ax = plt.subplots()
+#     fig.suptitle("Ln(I-d)vs 1/T")
+#     ax.plot(x, y)
 
 # matrix = np.array(array).astype(float)
 # matrix02 = np.c_[matrix, np.log(np.abs(matrix[:, 1])), 1 / matrix[:, 3]]
