@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import glob
-import csv
 import os
 
 # def ActivationEnergyLevine():
@@ -68,26 +67,24 @@ def cargar_dados(indice_folder):
     array = np.asarray(novo02, dtype=object)
     return array
 
-a = cargar_dados(2)[:, 1][0]
 
-print(a)
-
+a = cargar_dados(5)
+# b = cargar_dados(3)[:, 0]
+# c = np.hstack(cargar_dados(3)[:, 1])
+# d = sorted(c, key=float)
+print(len(a))
 
 def myplot():
-    # bis = np.sort(os.listdir(str(b)))
-    # arr = np.char.replace(np.array(bis), '.txt', '')
-    # arr02 = np.char.replace(arr, './', '')
-    # print(arr02)
     for i in range(len(a)):
-        # c = np.genfromtxt(a[i], dtype=float, delimiter=',')
-        # d = np.reshape(c, (501, 5))
+        d = a[i]
         e = np.c_[d, np.abs(d[:, 1])]
-        plt.title('Amostra1395 n\ Mesa05Terra07')
+        plt.title('Amostra1395 \n Mesa03Terra07')
         plt.scatter(e[:, 0], e[:, 5])
         plt.yscale('log')
-        plt.legend(arr02, prop={'size': 8})
+        plt.legend(b, prop={'size': 8})
         plt.grid(b=True, which='minor', color='b', linestyle='--')
         plt.grid(b=True, which='major', color='b', linestyle='-')
+        
     plt.show()
     
 # print(myplot())
