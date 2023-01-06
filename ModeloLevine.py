@@ -68,24 +68,39 @@ def cargar_dados(indice_folder):
     return array
 
 
-a = cargar_dados(2)
-# b = cargar_dados(3)[:, 0]
-# c = np.hstack(cargar_dados(3)[:, 1])
-# d = sorted(c, key=float)
-print(len(a))
+a = cargar_dados(6)
 
-def myplot():
-    for i in range(len(a)):
-        d = a[i]
-        e = np.c_[d, np.abs(d[:, 1])]
-        plt.title('Amostra1395 \n Mesa03Terra07')
-        plt.scatter(e[:, 0], e[:, 5])
-        plt.yscale('log')
-        plt.legend(b, prop={'size': 8})
-        plt.grid(b=True, which='minor', color='b', linestyle='--')
-        plt.grid(b=True, which='major', color='b', linestyle='-')
+if len(a) == 22:
+    list = []
+    for i in range(0, 22):
+        if i == 0:
+            list.append(a[21])
+        else:
+            list.append(a[i-1])
+            
+    arreglo = np.asarray(list, dtype=object)
+    
+else:
+    arreglo = a
+
+c = arreglo[:, 0]
+d = arreglo[:, 1]
+e = np.array(d, dtype=float)
+
+print(e)
+
+# def myplot():
+    # for i in range(len(a)):
+    #     d = a[i]
+    #     e = np.c_[d, np.abs(d[:, 1])]
+    #     plt.title('Amostra1395 \n Mesa03Terra07')
+    #     plt.scatter(e[:, 0], e[:, 5])
+    #     plt.yscale('log')
+    #     plt.legend(b, prop={'size': 8})
+    #     plt.grid(b=True, which='minor', color='b', linestyle='--')
+    #     plt.grid(b=True, which='major', color='b', linestyle='-')
         
-    plt.show()
+    # plt.show()
     
 # print(myplot())
 
