@@ -68,7 +68,7 @@ def cargar_dados(indice_folder):
     return array
 
 
-a = cargar_dados(5)
+a = cargar_dados(2)
 # b = cargar_dados(3)[:, 0]
 # c = np.hstack(cargar_dados(3)[:, 1])
 # d = sorted(c, key=float)
