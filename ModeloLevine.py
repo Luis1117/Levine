@@ -3,6 +3,69 @@ import matplotlib.pyplot as plt
 import glob
 import os
 
+
+all_folders = np.sort(os.listdir())
+# ['.git' '.vscode' '1395IvsV13092022' '1395IvsV26092022' '1395IvsV27092022'
+#  '1395IvsV28092022' '1395IvsV29092022' 'Comparação'
+#  'InformaçõesMedidas.odt' 'ModeloLevine.py' 'TesisProject']
+
+# print(all_folders)
+def cargar_dados(indice_folder):
+    my_files = np.sort(glob.glob(str(all_folders[indice_folder]) + "/*.txt"))
+    my_files02 = np.char.replace(np.array(my_files), '.txt', '')
+    my_files03 = np.char.replace(np.array(my_files), 'K.txt', '')
+    temperture02 = np.char.replace(np.array(my_files02), str(all_folders[indice_folder])+'/', '')
+    temperture03 = np.char.replace(np.array(my_files03), str(all_folders[indice_folder])+'/', '')
+    
+    novo02 = []
+    for i in range(len(my_files)):
+        c = np.genfromtxt(my_files[i], dtype=float, delimiter=',')
+        d = np.reshape(c, (501, 5))
+        e = d, [temperture02[i]], temperture03[i]
+        novo02.append(e)
+    array = np.asarray(novo02, dtype=object)
+    return array
+
+
+a = cargar_dados(2)
+
+if len(a) == 22:
+    list = []
+    for i in range(0, 22):
+        if i == 0:
+            list.append(a[21])
+        else:
+            list.append(a[i-1])
+            
+    arreglo = np.asarray(list, dtype=object)
+    
+else:
+    arreglo = a
+
+c = arreglo[:, 0]
+d1 = arreglo[:, 1].tolist()
+d2 = arreglo[:, 2].tolist()
+e = np.vstack(d1)
+f = np.reshape(e, (1, len(d1)))
+g = f[0]
+
+# print(g)
+
+def myplot():
+    for i in range(len(c)):
+        d = c[i]
+        e = np.c_[d, np.abs(d[:, 1])]
+        plt.title('Amostra1395 \n Mesa03Terra07')
+        plt.scatter(e[:, 0], e[:, 5])
+        plt.yscale('log')
+        plt.legend(g, prop={'size': 8})
+        plt.grid(b=True, which='minor', color='b', linestyle='--')
+        plt.grid(b=True, which='major', color='b', linestyle='-')
+        
+    plt.show()
+    
+# print(myplot())
+
 # def ActivationEnergyLevine():
 #     a = glob.glob('./*K.txt')
 #     k = np.char.replace(np.array(a), 'K.txt', '')
@@ -27,91 +90,30 @@ import os
 #     # Testamos 'matrix02 = np.reshape(matrix[1, 0], (501, 5))', estamos procurando
 #     # um paso de voltagem de 0.01 V, Agora introducimos um for para pegarmos I-d para esse paso:
 
-#     array = []
-#     for i in range(len(a)):
-#         matrix02 = np.reshape(matrix[i, 0], (501, 5))
-#         for j in range(101):
-#             c = (5*j)
-#             d = matrix02[c]
-#             e = np.r_[d, [j, l[i]]]
-#             array.append(e)
+def ActivationEnergy():
+    array = []
+    for i in range(len(c)):
+        matrix = c[i]
+        for j in range(101):
+            d = (5*j)
+            e = matrix[d]
+            f = np.r_[e, [j, d2[i]]]
+            array.append(f)
 
-#     # Reajeitamos, em 21 txt, 101 pontos a ler, 7 columnas:
+    # Reajeitamos, em 21 txt, 101 pontos a ler, 7 columnas:
 
-#     matrix03 = np.reshape(np.array(array), (21, 101, 7)).astype(float)
-
-#     graficos = []
-#     for i in range(101):
-#         ordenando = matrix03[:, i][matrix03[:, i][:, 6].argsort()]
-#         ordenando02 = np.c_[ordenando, 1/ordenando[:, 6]]
-#         graficos.append(ordenando02)
-
-    # print(matrix03[3][0])
-
-all_folders = np.sort(os.listdir())
-# ['.git' '.vscode' '1395IvsV13092022' '1395IvsV26092022' '1395IvsV27092022'
-#  '1395IvsV28092022' '1395IvsV29092022' 'Comparação'
-#  'InformaçõesMedidas.odt' 'ModeloLevine.py' 'TesisProject']
-
-# print(all_folders)
-def cargar_dados(indice_folder):
-    my_files = np.sort(glob.glob(str(all_folders[indice_folder]) + "/*.txt"))
-    my_files02 = np.char.replace(np.array(my_files), 'K.txt', '')
-    temperture = np.char.replace(np.array(my_files02), str(all_folders[indice_folder])+'/', '')
-    novo02 = []
-    for i in range(len(my_files)):
-        c = np.genfromtxt(my_files[i], dtype=float, delimiter=',')
-        d = np.reshape(c, (501, 5))
-        e = d, [temperture[i]]
-        novo02.append(e)
-    array = np.asarray(novo02, dtype=object)
-    return array
-
-
-a = cargar_dados(6)
-
-if len(a) == 22:
-    list = []
-    for i in range(0, 22):
-        if i == 0:
-            list.append(a[21])
-        else:
-            list.append(a[i-1])
-            
-    arreglo = np.asarray(list, dtype=object)
+    matrix02 = np.reshape(np.array(array), (len(c), 101, 7)).astype(float)
     
-else:
-    arreglo = a
+    # graficos = []
+    # for i in range(101):
+    #     ordenando = matrix03[:, i][matrix03[:, i][:, 6].argsort()]
+    #     ordenando02 = np.c_[ordenando, 1/ordenando[:, 6]]
+    #     graficos.append(ordenando02)
 
-c = arreglo[:, 0]
-d = arreglo[:, 1]
-e = np.array(d, dtype=float)
-
-print(e)
-
-# def myplot():
-    # for i in range(len(a)):
-    #     d = a[i]
-    #     e = np.c_[d, np.abs(d[:, 1])]
-    #     plt.title('Amostra1395 \n Mesa03Terra07')
-    #     plt.scatter(e[:, 0], e[:, 5])
-    #     plt.yscale('log')
-    #     plt.legend(b, prop={'size': 8})
-    #     plt.grid(b=True, which='minor', color='b', linestyle='--')
-    #     plt.grid(b=True, which='major', color='b', linestyle='-')
-        
-    # plt.show()
     
-# print(myplot())
+    return matrix02[0][0]
 
-
-#  fig, ax = plt.subplots()
-# ax.scatter(graficos[10][:, 7], graficos[10][:, 1])
-# ax.set_xlabel('1/T')
-# ax.set_ylabel('Dark-Current (A)')
-# ax.set_title('Graficos')
-# plt.show()
-
+print(len(ActivationEnergy()))
 
 # for i in range(101):
 # x =
