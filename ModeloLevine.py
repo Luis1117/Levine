@@ -66,30 +66,6 @@ def myplot():
     
 # print(myplot())
 
-# def ActivationEnergyLevine():
-#     a = glob.glob('./*K.txt')
-#     k = np.char.replace(np.array(a), 'K.txt', '')
-#     l = np.char.replace(k, './', '')
-#     m = sorted(l.astype(float), key=float)P
-
-#     # Carregando dados dos txt, usar listas é melhor para isso
-
-#     novo02 = []
-#     for i in range(len(a)):
-#         novo = []
-#         with open(a[i], 'r') as f:
-#             lol = csv.reader(f)
-#             for row in lol:
-#                 novo.append(row)
-#         lol = novo + [l[i]]
-#         novo02.append(lol)
-
-#     # Uma vez carregado pasamos para numpy array:
-#     matrix = np.reshape(np.array(novo02, dtype=object), (len(a), 2))
-
-#     # Testamos 'matrix02 = np.reshape(matrix[1, 0], (501, 5))', estamos procurando
-#     # um paso de voltagem de 0.01 V, Agora introducimos um for para pegarmos I-d para esse paso:
-
 def ActivationEnergy():
     array = []
     for i in range(len(c)):
@@ -97,23 +73,24 @@ def ActivationEnergy():
         for j in range(101):
             d = (5*j)
             e = matrix[d]
-            f = np.r_[e, [j, d2[i]]]
+            f = np.r_[e, [i, d2[i]]]
             array.append(f)
 
     # Reajeitamos, em 21 txt, 101 pontos a ler, 7 columnas:
-
-    matrix02 = np.reshape(np.array(array), (len(c), 101, 7)).astype(float)
+    matrix01 = np.array(array).astype(float)
+    matrix02 = np.c_[matrix01, 1/matrix01[:, 6], np.log(np.abs(matrix01[:, 1]))]
+    Ln = np.reshape(matrix02, (len(c), 101, 9))
     
-    # graficos = []
-    # for i in range(101):
-    #     ordenando = matrix03[:, i][matrix03[:, i][:, 6].argsort()]
-    #     ordenando02 = np.c_[ordenando, 1/ordenando[:, 6]]
-    #     graficos.append(ordenando02)
-
+    for i in range(3, 18):
+        plt.title('Amostra 1395')
+        plt.scatter(Ln[i][:, 7], Ln[i][:, 8])
+        plt.xlabel("1 / Temperatura $(K^{-1})$")
+        plt.ylabel("Ln(I-d) $(Ln(A))$")
+    # plt.show()
     
-    return matrix02[0][0]
+    return plt.show()
 
-print(len(ActivationEnergy()))
+print(ActivationEnergy())
 
 # for i in range(101):
 # x =
