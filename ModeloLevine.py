@@ -62,7 +62,7 @@ def myplot():
         plt.grid(b=True, which='minor', color='b', linestyle='--')
         plt.grid(b=True, which='major', color='b', linestyle='-')
         
-    plt.show()
+    return plt.show()
     
 # print(myplot())
 
@@ -79,69 +79,56 @@ def ActivationEnergy():
     # Reajeitamos, em 21 txt, 101 pontos a ler, 7 columnas:
     matrix01 = np.array(array).astype(float)
     matrix02 = np.c_[matrix01, 1/matrix01[:, 6], np.log(np.abs(matrix01[:, 1]))]
-    Ln = np.reshape(matrix02, (len(c), 101, 9))
+    prova = np.reshape(matrix02, (len(c), 101, 9))
     
-    for i in range(3, 18):
-        plt.title('Amostra 1395')
-        plt.scatter(Ln[i][:, 7], Ln[i][:, 8])
-        plt.xlabel("1 / Temperatura $(K^{-1})$")
-        plt.ylabel("Ln(I-d) $(Ln(A))$")
-    # plt.show()
+    # Ordenando dados para plotar
     
-    return plt.show()
+    final = []
+    for i in range(101):
+        prova02 = prova[:, i][prova[:, i][:, 3].argsort()]
+        final.append(prova02)
+    
+    Ln = np.array(final)
+        
+    def plot02():
+        for i in range(101):
+            plt.title('Amostra 1395')
+            plt.scatter(Ln[i][5:16, 7], Ln[i][5:16, 8])
+            plt.xlabel("1 / Temperatura $(K^{-1})$")
+            plt.ylabel("Ln(I-d) $(Ln(A))$")
+        plt.show()
+        
+        
+    LnvsT = []
+
+    for i in range(101):
+        LinearRegression = np.polyfit(Ln[i][5:16, 7],
+                                      Ln[i][5:16, 8], 1, cov=True)
+        AngCoef = LinearRegression[0][0], np.sqrt(LinearRegression[1][0, 0]), -5 + 0.1*i
+        LnvsT.append(AngCoef)
+
+    Ea = np.array(LnvsT)
+
+    EavsV = np.c_[Ea, -Ea[:, 0]*8.61e-5, -Ea[:, 1]*8.61e-5, -Ea[:, 0]*8.61e-2, Ea[:, 1]*8.61e-2]
+
+    x_Ea = EavsV[:, 2]
+    y_Ea = EavsV[:, 5]
+    Err_Y = EavsV[:, 6]
+
+    def myplot03():
+        plt.title('Amostra 1395-Modelo Levine (paso voltagem = 0.1V)')
+        # plt.scatter(x_EA, y_EA, yerr=Err_Y, fmt='o')
+        plt.grid(axis='both')
+        plt.xlabel('Tensão (V)')
+        plt.ylabel('Ea (meV)')
+        plt.errorbar(x_Ea, y_Ea, yerr=Err_Y, fmt='o', color='r')
+        # plt.savefig('line_plot.jpg', dpi=300)
+        np.savetxt('/home/luis11/Documentos/DadosIvsV/TratamentoDados/Amostras2022/Amostra1395/EaLevine/Ea1395MelhorRes.txt', EavsV, delimiter=',')
+
+        return plt.show()
+
+    return myplot03()
 
 print(ActivationEnergy())
 
-# for i in range(101):
-# x =
-# y =
 
-#     fig, ax = plt.subplots()
-#     fig.suptitle("Ln(I-d)vs 1/T")
-#     ax.plot(x, y)
-
-# matrix = np.array(array).astype(float)
-# matrix02 = np.c_[matrix, np.log(np.abs(matrix[:, 1])), 1 / matrix[:, 3]]
-# prova = np.reshape(matrix02, (57, 101, 6))
-# final = []
-# for i in range(100):
-#     prova02 = prova[:, i][prova[:, i][:, 3argsort()]
-#     final.append(prova02)
-
-# Ln = np.array(final)
-
-# # for i in range(100):
-# #     plt.title('Amostra 1395')
-# #     plt.scatter(Ln[i][27:55, 5], Ln[i][27:55, 4])
-# #     plt.xlabel("1 / Temperatura $(K^{-1})$")
-# #     plt.ylabel("Ln(I-d) $(Ln(A))$")
-# # plt.show()
-
-# LnvsT = []
-
-# for i in range(100):
-#     LinearRegression = np.polyfit(Ln[i][33:47, 5],
-#                                   Ln[i][33:47, 4], 1, cov=True)
-#     AngCoef = LinearRegression[0][0], np.sqrt(
-#         LinearRegression[1][0, 0]), -5 + 0.1*i
-#     LnvsT.append(AngCoef)
-
-# Ea = np.array(LnvsT)
-
-# EavsV = np.c_[Ea, -Ea[:, 0]*8.61e-5, -Ea[:, 1] *
-#               8.61e-5, -Ea[:, 0]*8.61e-2, -Ea[:, 1]*8.61e-2]
-
-# x_Ea = EavsV[:, 2]
-# y_Ea = EavsV[:, 5]
-# Err_Y = EavsV[:, 6]
-
-# plt.title('Amostra 1395-Modelo Levine (paso voltagem = 0.1V)')
-# # plt.scatter(x_EA, y_EA, yerr=Err_Y, fmt='o')
-# plt.grid(axis='both')
-# plt.xlabel('Tensão (V)')
-# plt.ylabel('Ea (meV)')
-# plt.errorbar(x_Ea, y_Ea, yerr=Err_Y, fmt='o', color='r')
-# # plt.savefig('line_plot.jpg', dpi=300)
-# np.savetxt('Ea1395MelhorRes.txt', EavsV, delimiter=',')
-
-# plt.show()
