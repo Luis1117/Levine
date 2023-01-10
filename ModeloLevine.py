@@ -9,7 +9,11 @@ all_folders = np.sort(os.listdir())
 #  '1395IvsV28092022' '1395IvsV29092022' 'Comparação'
 #  'InformaçõesMedidas.odt' 'ModeloLevine.py' 'TesisProject']
 
-# print(all_folders)
+print(all_folders)
+
+####################################################################################################
+####################################################################################################
+
 def cargar_dados(indice_folder):
     my_files = np.sort(glob.glob(str(all_folders[indice_folder]) + "/*.txt"))
     my_files02 = np.char.replace(np.array(my_files), '.txt', '')
@@ -129,6 +133,6 @@ def ActivationEnergy():
 
     return myplot03()
 
-print(ActivationEnergy())
+# print(ActivationEnergy())
 
 
