@@ -9,7 +9,7 @@ all_folders = np.sort(os.listdir())
 #  '1395IvsV28092022' '1395IvsV29092022' 'Comparação' 'EaLevine'
 #  'InformaçõesAmostra1395' 'ModeloLevine.py' 'TesisProject']
 
-print(all_folders)
+# print(all_folders)
 
 ####################################################################################################
 ####################################################################################################
@@ -56,19 +56,23 @@ g = f[0]
 # print(g)
 
 def myplot():
+    
+    fig, ax = plt.subplots()
     for i in range(len(c)):
         d = c[i]
         e = np.c_[d, np.abs(d[:, 1])]
-        plt.title('Amostra1395 \n Mesa03Terra07')
-        plt.scatter(e[:, 0], e[:, 5])
-        plt.yscale('log')
-        plt.legend(g, prop={'size': 8})
-        plt.grid(b=True, which='minor', color='b', linestyle='--')
-        plt.grid(b=True, which='major', color='b', linestyle='-')
+        ax.scatter(e[:, 0], e[:, 5])
+        ax.legend(g, prop={'size': 8})
+        ax.set_title('Amostra1395 \n Mesa03Terra07')
+        ax.minorticks_on()
+        ax.grid(which='minor', color='b', linestyle='--', alpha=0.3)
+        ax.grid(which='major', color='b', linestyle='-', alpha=0.2)
+        ax.set_yscale('log')
+        
         
     return plt.show()
     
-# print(myplot())
+print(myplot())
 
 def ActivationEnergy():
     array = []
