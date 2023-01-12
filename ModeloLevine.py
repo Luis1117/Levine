@@ -6,8 +6,8 @@ import os
 
 all_folders = np.sort(os.listdir())
 # ['.git' '.vscode' '1395IvsV13092022' '1395IvsV26092022' '1395IvsV27092022'
-#  '1395IvsV28092022' '1395IvsV29092022' 'Comparação'
-#  'InformaçõesMedidas.odt' 'ModeloLevine.py' 'TesisProject']
+#  '1395IvsV28092022' '1395IvsV29092022' 'Comparação' 'EaLevine'
+#  'InformaçõesAmostra1395' 'ModeloLevine.py' 'TesisProject']
 
 print(all_folders)
 
@@ -127,7 +127,7 @@ def ActivationEnergy():
         plt.ylabel('Ea (meV)')
         plt.errorbar(x_Ea, y_Ea, yerr=Err_Y, fmt='o', color='r')
         # plt.savefig('line_plot.jpg', dpi=300)
-        np.savetxt('/home/luis11/Documentos/DadosIvsV/TratamentoDados/Amostras2022/Amostra1395/EaLevine/Ea1395MelhorRes.txt', EavsV, delimiter=',')
+        # np.savetxt('/home/luis11/Documentos/DadosIvsV/TratamentoDados/Amostras2022/Amostra1395/EaLevine/Ea1395MelhorRes.txt', EavsV, delimiter=',')
 
         return plt.show()
 
