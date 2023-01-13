@@ -6,13 +6,20 @@ import os
 
 all_folders = np.sort(os.listdir())
 # ['.git' '.vscode' '1395IvsV13092022' '1395IvsV26092022' '1395IvsV27092022'
-#  '1395IvsV28092022' '1395IvsV29092022' 'Comparação'
-#  'InformaçõesMedidas.odt' 'ModeloLevine.py' 'TesisProject']
+#  '1395IvsV28092022' '1395IvsV29092022' 'Comparação' 'EaLevine'
+#  'InformaçõesAmostra1395' 'ModeloLevine.py' 'TesisProject']
 
-print(all_folders)
+# print(all_folders)
 
 ####################################################################################################
 ####################################################################################################
+
+path = '/home/luis11/Documentos/DadosIvsV/TratamentoDados/Amostras2022/Amostra1395/EaLevine/'
+path_total = path +'EavsV_1395_Levine_07terra04corrente.txt'
+titulo_plot1 =  'Amostra 1395 IvsV terra07 corrente04'
+titulo_plot2 =  'Amostra 1395 LnvsT terra07 corrente04'
+titulo_plot3 = 'Amostra 1395 Ea Modelo Levine \n terra07corrente04'
+
 
 def cargar_dados(indice_folder):
     my_files = np.sort(glob.glob(str(all_folders[indice_folder]) + "/*.txt"))
@@ -31,7 +38,7 @@ def cargar_dados(indice_folder):
     return array
 
 
-a = cargar_dados(2)
+a = cargar_dados(6)
 
 if len(a) == 22:
     list = []
@@ -55,20 +62,23 @@ g = f[0]
 
 # print(g)
 
-def myplot():
+def plot01():
     for i in range(len(c)):
         d = c[i]
         e = np.c_[d, np.abs(d[:, 1])]
-        plt.title('Amostra1395 \n Mesa03Terra07')
+        plt.title(titulo_plot1)
         plt.scatter(e[:, 0], e[:, 5])
         plt.yscale('log')
+        plt.ylabel('Corrente (A)')
+        plt.xlabel('Tesão (V)')
         plt.legend(g, prop={'size': 8})
         plt.grid(b=True, which='minor', color='b', linestyle='--')
         plt.grid(b=True, which='major', color='b', linestyle='-')
-        
+        plt.savefig(path + 'IvsV1395terra07corrente04.jpg', dpi=300)
+    
     return plt.show()
     
-# print(myplot())
+# print(plot01())
 
 def ActivationEnergy():
     array = []
@@ -95,12 +105,15 @@ def ActivationEnergy():
     Ln = np.array(final)
         
     def plot02():
+        
         for i in range(101):
-            plt.title('Amostra 1395')
-            plt.scatter(Ln[i][5:16, 7], Ln[i][5:16, 8])
+            plt.title(titulo_plot2)
+            plt.scatter(Ln[i][:, 7], Ln[i][:, 8])
             plt.xlabel("1 / Temperatura $(K^{-1})$")
             plt.ylabel("Ln(I-d) $(Ln(A))$")
-        plt.show()
+            plt.savefig(path+'LnvsT139507terra04corrente.jpg', dpi=300)
+        
+        return plt.show()
         
         
     LnvsT = []
@@ -119,20 +132,20 @@ def ActivationEnergy():
     y_Ea = EavsV[:, 5]
     Err_Y = EavsV[:, 6]
 
-    def myplot03():
-        plt.title('Amostra 1395-Modelo Levine (paso voltagem = 0.1V)')
+    def plot03():
+        plt.title(titulo_plot3)
         # plt.scatter(x_EA, y_EA, yerr=Err_Y, fmt='o')
         plt.grid(axis='both')
         plt.xlabel('Tensão (V)')
         plt.ylabel('Ea (meV)')
         plt.errorbar(x_Ea, y_Ea, yerr=Err_Y, fmt='o', color='r')
-        # plt.savefig('line_plot.jpg', dpi=300)
-        np.savetxt('/home/luis11/Documentos/DadosIvsV/TratamentoDados/Amostras2022/Amostra1395/EaLevine/Ea1395MelhorRes.txt', EavsV, delimiter=',')
+        plt.savefig(path+'EavsV 1395 07terra04corrente.jpg', dpi=300)
+        np.savetxt(path_total, EavsV, delimiter=',')
 
         return plt.show()
 
-    return myplot03()
+    return plot03()
 
-# print(ActivationEnergy())
+print(ActivationEnergy())
 
 
