@@ -1,3 +1,10 @@
-{
+[
+  {
     "python.analysis.typeCheckingMode": "basic"
-}
+  },
+  {
+    "editor.fontLiatures" : true
+    // "terminal.integrated.fontFamily": "atomic NF"
+    // "editor.fontFamily": "'JetBrainsMonospaceRegular'",
+  }
+]
