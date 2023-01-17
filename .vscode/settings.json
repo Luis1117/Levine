@@ -4,7 +4,5 @@
   },
   {
     "editor.fontLiatures" : true
-    // "terminal.integrated.fontFamily": "atomic NF"
-    // "editor.fontFamily": "'JetBrainsMonospaceRegular'",
   }
 ]
